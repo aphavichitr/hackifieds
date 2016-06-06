@@ -64,11 +64,24 @@ class App extends React.Component {
   }
 
   setSession (user) {
-    this.setState({ currentUser: user });
+    this.setState({ currentUser: user, activeListing: user.activeListing || null });
   }
 
   logOut () {
     helpers.logout( data => this.setState({currentUser: {}}) );
+  }
+
+  handleContactAuth(event) {
+    helpers.contactAuth(event.currentTarget.id, (data) => {
+      console.log('response from contactAuth', data);
+      $.ajax({
+        url: '/auth/github',
+        method: 'GET',
+        success: data => console.log( 'Contact Auth response: ', data),
+        error: err => console.log( 'Error connecting to GitHub.', err)
+      });
+
+    });
   }
 
   render () {
@@ -88,7 +101,8 @@ class App extends React.Component {
                       activeFilter={this.state.activeFilter}
                       activeListing={this.state.activeListing}
                       listings={this.state.listings}
-                      user={this.state.currentUser}/>
+                      user={this.state.currentUser}
+                      handleContactAuth={this.handleContactAuth.bind(this)}/>
           </Col>
         </Row>;
     } else if (this.state.currentView === 'newListingView' ) {

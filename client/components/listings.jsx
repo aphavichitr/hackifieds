@@ -3,6 +3,7 @@ import ListingInfo from './listingInfo.jsx';
 
 const Listings = props => {
   let filtered = [];
+  console.log('props', props.activeListing);
   //Iterate over all listings and generate filtered population based on activeFilter value
   props.listings.forEach(listing => {
     if (props.activeFilter === 'All' || listing.location === props.activeFilter) {
@@ -14,7 +15,7 @@ const Listings = props => {
     <div className="listings">
       {filtered.map(listing => 
         (props.activeListing && props.activeListing === listing.listingId) ? 
-        <ListingInfo handleListingInfoClick = {props.handleListingInfoClick} listing={listing} user={props.user}/> : 
+        <ListingInfo handleListingInfoClick = {props.handleListingInfoClick} listing={listing} user={props.user} activeListing={props.activeListing} handleContactAuth={props.handleContactAuth}/> : 
         <ListingEntry key={listing.listingId} handleListingEntryClick={props.handleListingEntryClick} listing={listing}/>)
       }
     </div>

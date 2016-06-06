@@ -49,6 +49,15 @@ let logout = callback => {
   });
 };
 
+let contactAuth = (activeListing, callback) => {
+  $.ajax({
+    url: '/api/contact/auth',
+    method: 'GET',
+    data: {activeListing: activeListing},
+    success: data => callback(data),
+    error: err => console.log( 'Error setting contact to server.', err)
+  });
+
 let dateFormatter = date => {
   let months = {
     0: 'Jan',
@@ -71,5 +80,5 @@ let dateFormatter = date => {
   return months[month] + ' ' + day;
 };
 
-export default { getCategories, getListings, postListing, userAuth, dateFormatter, logout};
+export default { getCategories, getListings, postListing, userAuth, contactAuth, dateFormatter, logout};
 

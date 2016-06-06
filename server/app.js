@@ -12,6 +12,8 @@ var listingsCtrl = require('./controllers/listingsController');
 var categoriesController = require('./controllers/categoriesController');
 var github = require('./auth/github_oauth');
 
+var contact = {};
+
 // passport session setup
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -67,6 +69,9 @@ app.get('/auth/github/callback',
   passport.authenticate('github', { failureRedirect: '/login' }),
   function(req, res) {
     console.log('Github authentication successful!');
+    if (Object.keys(contact).length !== 0) {
+      req.contact = contact.contact;
+    }
     res.redirect('/');
   });
 
@@ -92,6 +97,12 @@ app.route('/api/auth')
   .get(function(req, res) {
     console.log('Req session before', req.session);
     res.send(req.user);
+  });
+app.route('/api/contact/auth')
+  .get(function(req, res) {
+    contact = req.query.activeListing;
+    console.log('contact', contact);
+    res.send(contact);
   });
 
 app.get('/api/logout', function(req, res) {

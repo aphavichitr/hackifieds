@@ -6,7 +6,7 @@ const ListingInfo = props => {
 
   if (Object.keys(props.user).length === 0) {
     contactLogic =
-      <a href='/auth/github'>Contact</a>;
+      <a id={props.activeListing} onClick={props.handleContactAuth}>Contact</a>;
   } else {
     contactLogic =
       <div>
