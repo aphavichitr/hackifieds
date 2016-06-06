@@ -57,6 +57,7 @@ let contactAuth = (activeListing, callback) => {
     success: data => callback(data),
     error: err => console.log( 'Error setting contact to server.', err)
   });
+};
 
 let dateFormatter = date => {
   let months = {
